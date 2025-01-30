@@ -1,0 +1,5 @@
+<h2>{{ patient.FirstName }} {{ patient.LastName }}</h2>
+<p>Date of Birth: {{ patient.DateOfBirth }}</p>
+<a href="{% url 'patient_update' patient.pk %}">Edit</a>
+<a href="{% url 'patient_delete' patient.pk %}">Delete</a>
+<a href="{% url 'patient_list' %}">Back to List</a>
