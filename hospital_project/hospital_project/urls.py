@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('hospital_app/', include('hospital_app.urls')),
+    path('admin/', admin.site.urls), #Admin panel
+    path('hospital_app/', include('hospital_app.urls')), #include('hospital_app.urls'): Connects the app's urls.py to the project
 ]
+'''Without include(), Django wouldn’t know about the app’s URLs'''

@@ -30,7 +30,7 @@ python manage.py runserver'''
 '''Open Django shell to query data
 python manage.py shell'''
 
-"""Sample Querries"""
+"""Sample Queries for Django ORM(Object-Relational Mapper)"""
 #Get all patients
 
 '''from hospital_app.models import Patient
@@ -49,5 +49,11 @@ for bill in Billing.objects.select_related('PatientID'):
 for record in DoctorDepartment.objects.select_related('DoctorID', 'DepartmentID'):
     print(f"Department: {record.DepartmentID.DepartmentName}, Doctor: {record.DoctorID.DoctorName}, "
           f"Specialty: {record.DoctorID.Specialty}")'''
+
+
+'''PostgreSQL
+python manage.py dbshell
+Check Tables- \dt'''
+
 
 

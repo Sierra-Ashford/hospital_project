@@ -1,7 +1,7 @@
 from django import forms
 from .models import Patient
 
-class PatientForm(forms.ModelForm):
-    class Meta:
-        model = Patient
-        fields = ['PatientID','FirstName', 'LastName', 'DateOfBirth']
+class PatientForm(forms.ModelForm): #Automatically creates a form based on the model
+    class Meta: #Defines model and fields used in the form
+        model = Patient #Uses Patient model
+        fields = ['FirstName', 'LastName', 'DateOfBirth'] 
