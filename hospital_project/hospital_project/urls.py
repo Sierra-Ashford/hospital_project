@@ -19,6 +19,8 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls), #Admin panel
-    path('hospital_app/', include('hospital_app.urls')), #include('hospital_app.urls'): Connects the app's urls.py to the project
+    path('', include('hospital_app.urls')), #include('hospital_app.urls'): Connects the app's urls.py to the project
 ]
 '''Without include(), Django wouldn’t know about the app’s URLs'''
+
+#The '' (empty string) means this pattern applies to the base URL (http://127.0.0.1:8000/)

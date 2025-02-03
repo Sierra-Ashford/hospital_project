@@ -17,5 +17,5 @@ name='patient_list' allows us to reference this URL in templates
 '''
 
 '''Example
-http://127.0.0.1:8000/admin/hospital_app/patient/
+http://127.0.0.1:8000/patients/
 '''
