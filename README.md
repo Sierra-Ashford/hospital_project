@@ -3,6 +3,7 @@ Hospital Management System
 This is a Django-based hospital management system that handles patient records, doctor assignments, billing, and department management. It includes basic CRUD (Create, Read, Update, and Delete) operations for each entity. 
 
 Features
+
 Patient Management: Add, update, delete, and view patient records.
 
 Doctor Management: Manage doctor details and their departments.
