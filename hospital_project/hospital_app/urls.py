@@ -1,8 +1,10 @@
 from django.urls import path
 from . import views
+from .views import home
 
 #Patient CRUD URLs
 urlpatterns = [
+    path('', home, name='home'),
     path('patients/', views.patient_list, name='patient_list'), #List all patients
     path('patients/create/', views.patient_create, name='patient_create'), #Create new patient
     path('patients/<int:pk>/', views.patient_detail, name='patient_detail'), #View patient details

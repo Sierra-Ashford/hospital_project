@@ -1,4 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
 <h2>Patient List</h2>
+{% if user.is_authenticated %}
+    <a href="{% url 'patient_create' %}">Create New Patient</a>
+{% endif %}
+<ul>
+    {% for patient in patients %}
+        <li>
+            {{ patient.name }} - <a href="{% url 'patient_detail' patient.id %}">Details</a>
+            {% if user == patient.created_by or user.is_staff %}
+                | <a href="{% url 'patient_update' patient.id %}">Edit</a>
+                | <a href="{% url 'patient_delete' patient.id %}">Delete</a>
+            {% endif %}
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}
+
+
+
+<!-- <h2>Patient List</h2>
 <a href="{% url 'patient_create' %}">Create New Patient</a>
 <ul>
     {% for patient in patients %}
@@ -8,5 +30,5 @@
             <a href="{% url 'patient_delete' patient.pk %}">Delete</a>)
         </li>
     {% endfor %}
-</ul>
+</ul> -->
 
