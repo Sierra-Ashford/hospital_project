@@ -6,7 +6,7 @@ from .forms import PatientForm
 from django.shortcuts import render
 
 # Create your views here.
-
+#Homepage
 def home(request):
     return render(request, 'home.html')
 
@@ -30,13 +30,13 @@ def patient_create(request):
     return render(request, 'hospital_app/patient_form.html', {'form': form})
         
 #Detail View
-@login_required
+@login_required 
 def patient_detail(request, pk):
     patient = get_object_or_404(Patient, pk=pk) #Retrieves a patient or shows a 404 error if not found
     return render(request, 'hospital_app/patient_detail.html', {'patient': patient})
 
 #Update View
-@login_required
+@login_required #Only allows authorized users to update patients.
 def patient_update(request, pk):
     patient = get_object_or_404(Patient, pk=pk)
 
@@ -53,7 +53,7 @@ def patient_update(request, pk):
     return render(request, 'hospital_app/patient_form.html', {'form': form})
 
 #Delete View
-@login_required
+@login_required #Requires permission to delete patient records 
 def patient_delete(request, pk):
     patient = get_object_or_404(Patient, pk=pk)
 
@@ -62,4 +62,3 @@ def patient_delete(request, pk):
     
     patient.delete() #Deletes patient from database
     return redirect('patient_list') #Redirect to list view
-    

@@ -18,11 +18,12 @@ from django.contrib import admin
 from django.urls import path, include
 from hospital_app.views import home
 
+
 urlpatterns = [
     path('admin/', admin.site.urls), #Admin panel
     path('patients/', include('hospital_app.urls')), #include('hospital_app.urls'): Connects the app's urls.py to the project
-    path('accounts/', include('allauth.urls')), #Django Allauth URLs
-    path('', home, name='home'),
+    path('accounts/', include('allauth.urls')), #Handles authentication via Django Allauth
+    path('', home, name='home'), #Calls the home view
 ]
 '''Without include(), Django wouldn’t know about the app’s URLs'''
 
