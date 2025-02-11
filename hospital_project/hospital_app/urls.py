@@ -1,16 +1,28 @@
 from django.urls import path
 from . import views
-from .views import home
+from .views import (home, dashboard,
+                    patient_list, patient_create, patient_detail, patient_update, patient_delete, 
+                    add_doctor, doctor_list, update_doctor, delete_doctor)
 
-#Patient CRUD URLs
+
 urlpatterns = [
-    path('', home, name='home'),
-    path('patients/', views.patient_list, name='patient_list'), #List all patients
-    path('patients/create/', views.patient_create, name='patient_create'), #Create new patient
-    path('patients/<int:pk>/', views.patient_detail, name='patient_detail'), #View patient details
-    path('patients/<int:pk>/update/', views.patient_update, name='patient_update'), #Update patient info
-    path('patients/<int:pk>/delete/', views.patient_delete, name='patient_delete'), #Delete patient
+    path('', dashboard, name='dashboard'),
+    path('home/', home, name='home'),
+
+    #Patient CRUD URLs
+    path('patients/', patient_list, name='patient_list'), #List all patients
+    path('create/', patient_create, name='patient_create'), #Create new patient
+    path('<int:pk>/', patient_detail, name='patient_detail'), #View patient details
+    path('<int:pk>/update/', patient_update, name='patient_update'), #Update patient info
+    path('<int:pk>/delete/', patient_delete, name='patient_delete'), #Delete patient
+
+    #Doctor CRUD URLs
+    path('doctors/', doctor_list, name='doctor_list'),
+    path('doctors/add/', add_doctor, name='add_doctor'),
+    path('doctors/edit/<int:doctor_id>/', update_doctor, name='update_doctor'),
+    path('doctors/delete/<int:doctor_id>/', delete_doctor, name='delete_doctor'),
 ]
+
 
 '''
 path(route, view, name): Defines a URL pattern

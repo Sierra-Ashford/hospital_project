@@ -68,7 +68,7 @@ ROOT_URLCONF = 'hospital_project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / "templates"],
+        'DIRS': [BASE_DIR / 'hospital_project' / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -90,9 +90,9 @@ WSGI_APPLICATION = 'hospital_project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': env('DB_NAME'),        # e.g., my_database
-        'USER': env('DB_USER'),        # e.g., my_username
-        'PASSWORD': env('DB_PASSWORD'),# e.g., my_secure_password
+        'NAME': env('DB_NAME', default='hospital_db'),        # e.g., my_database
+        'USER': env('DB_USER', default='postgres'),        # e.g., my_username
+        'PASSWORD': env('DB_PASSWORD', default='password'),# e.g., my_secure_password
         'HOST': env('DB_HOST', default='localhost'),
         'PORT': env('DB_PORT', default='5432'),
     }
@@ -104,15 +104,20 @@ AUTHENTICATION_BACKENDS = (
 )
 
 #Django Allauth Settings
-LOGIN_REDIRECT_URL = '/admin/' #Redirect to the Django admin dashboard after login
+LOGIN_REDIRECT_URL = '/' 
 LOGOUT_REDIRECT_URL = '/' #Redirect to the home page after logout
 SITE_ID = 1
 
 ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_USERNAME_REQUIRED = True
-ACCOUNT_AUTHENTICATION_METHOD = 'username'
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_VERIFICATION = 'optional'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+ACCOUNT_DEFAULT_HTTP_PROTOCOL = "http"
+SOCIALACCOUNT_AUTO_SIGNUP = True
+SOCIALACCOUNT_ADAPTER = "allauth.socialaccount.adapter.DefaultSocialAccountAdapter"
+
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 
@@ -153,4 +158,17 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+SOCIALACCOUNT_PROVIDERS = {
+    "google": {
+        "SCOPE": ["email", "profile"],
+        "AUTH_PARAMS": {"access_type": "online"},
+        "METHOD": "oauth2",
+        "OAUTH_PKCE_ENABLED": True,  
+    }
+}
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = env('SOCIAL_AUTH_GOOGLE_OAUTH2_KEY', default='327875280979-fiabb19jcaf8hvuaqsbdmgp4t77djbpt.apps.googleusercontent.com')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = env('SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET', default='yGOCSPX-Xpxwld6HARpOT6a5Oxxv_vQ-63YP')
+
 

@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 '''A model is a blueprint for a database table. 
 Defines the structure of the table, (columns and the type of data they store).'''
@@ -11,6 +12,7 @@ class Patient(models.Model):
     FirstName = models.CharField(max_length=100)
     LastName = models.CharField(max_length=100)
     DateOfBirth = models.DateField()
+    created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
         return f"{self.FirstName} {self.LastName}" #Controls how the object is displayed as a string. Display patient as their full name

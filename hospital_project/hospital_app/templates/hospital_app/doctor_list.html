@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h2>Doctors</h2>
+  <a href="{% url 'add_doctor' %}">Add Doctor</a>
+  <ul>
+    {% for doctor in doctors %}
+      <li>
+        {{ doctor.first_name }} {{ doctor.last_name }} - {{ doctor.specialization }}
+        <a href="{% url 'update_doctor' doctor.id %}">Edit</a> |
+        <a href="{% url 'delete_doctor' doctor.id %}">Delete</a>
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock %}

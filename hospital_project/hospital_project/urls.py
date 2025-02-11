@@ -16,15 +16,16 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from hospital_app.views import home
+from hospital_app.views import dashboard
 
 
 urlpatterns = [
     path('admin/', admin.site.urls), #Admin panel
-    path('patients/', include('hospital_app.urls')), #include('hospital_app.urls'): Connects the app's urls.py to the project
+    path('', include('hospital_app.urls')), #include('hospital_app.urls'): Connects the app's urls.py to the project
     path('accounts/', include('allauth.urls')), #Handles authentication via Django Allauth
-    path('', home, name='home'), #Calls the home view
+
 ]
+
 '''Without include(), Django wouldn’t know about the app’s URLs'''
 
 #The '' (empty string) means this pattern applies to the base URL (http://127.0.0.1:8000/)
