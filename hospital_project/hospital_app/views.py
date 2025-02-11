@@ -84,7 +84,7 @@ def doctor_list(request):
     return render(request, 'hospital_app/doctor_list.html', {'doctors': doctors})
 
 def update_doctor(request, doctor_id):
-    doctor = get_object_or_404(Doctor, id=doctor_id)
+    doctor = get_object_or_404(Doctor, DoctorID=doctor_id)
     if request.method == 'POST':
         form = DoctorForm(request.POST, instance=doctor)
         if form.is_valid():
@@ -95,7 +95,7 @@ def update_doctor(request, doctor_id):
     return render(request, 'hospital_app/doctor_form.html', {'form': form})
 
 def delete_doctor(request, doctor_id):
-    doctor = get_object_or_404(Doctor, id=doctor_id)
+    doctor = get_object_or_404(Doctor, DoctorID=doctor_id)
     if request.method == 'POST':
         doctor.delete()
         return redirect('doctor_list')
