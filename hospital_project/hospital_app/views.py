@@ -1,8 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required, permission_required
 from django.http import HttpResponseForbidden
-from .models import Patient, Doctor
-from .forms import PatientForm, DoctorForm
+from .models import Patient, Doctor, Appointment
+from .forms import PatientForm, DoctorForm, AppointmentForm
 from django.shortcuts import render
 
 # Create your views here.
@@ -101,3 +101,45 @@ def delete_doctor(request, doctor_id):
         return redirect('doctor_list')
     return render(request, 'hospital_app/doctor_confirm_delete.html', {'doctor': doctor})
 
+
+#Appointment View
+@login_required
+def appointment_list(request):
+    appointments = Appointment.objects.all()
+    return render(request, 'hospital_app/appointment_list.html', {'appointments': appointments})
+
+@login_required
+def appointment_create(request):
+    if request.method == "POST":
+        form = AppointmentForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('appointment_list')  # Redirect to list of appointments
+    else:
+        form = AppointmentForm()
+    return render(request, 'hospital_app/appointment_form.html', {'form': form})
+
+@login_required
+def appointment_detail(request, pk):
+    appointment = get_object_or_404(Appointment, AppointmentID=pk)
+    return render(request, 'hospital_app/appointment_detail.html', {'appointment': appointment})
+
+@login_required
+def appointment_update(request, pk):
+    appointment = get_object_or_404(Appointment, AppointmentID=pk)
+    if request.method == "POST":
+        form = AppointmentForm(request.POST, instance=appointment)
+        if form.is_valid():
+            form.save()
+            return redirect('appointment_list')
+    else:
+        form = AppointmentForm(instance=appointment)
+    return render(request, 'hospital_app/appointment_form.html', {'form': form})
+
+@login_required
+def appointment_delete(request, pk):
+    appointment = get_object_or_404(Appointment, AppointmentID=pk)
+    if request.method == 'POST':
+        appointment.delete()
+        return redirect('appointment_list')
+    return render(request, 'hospital_app/appointment_confirm_delete.html', {'appointment': appointment})
