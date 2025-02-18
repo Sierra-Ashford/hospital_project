@@ -1,18 +1,5 @@
 from django.contrib import admin
 from .models import Patient, Doctor, Appointment, Billing, Department, DoctorDepartment
-# from django.apps import apps
-
-#Create data models
-'''Patient = apps.get_model('hospital_app', 'Patient')  
-Appointment = apps.get_model('hospital_app', 'Appointment') 
-Doctor = apps.get_model('hospital_app', 'Doctor')
-Billing = apps.get_model('hospital_app', 'Billing')
-Department = apps.get_model('hospital_app', 'Department')
-DoctorDepartment = apps.get_model('hospital_app', 'DoctorDepartment')'''
-
-'''apps.get_model
-app label: The name of the app where the model is located. 
-model name: The name of the model class you want to retrieve.'''
 
 # Register your models here.
 admin.site.register(Patient)

@@ -1,9 +1,9 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required, permission_required
 from django.http import HttpResponseForbidden
-from .models import Patient, Doctor, Appointment
-from .forms import PatientForm, DoctorForm, AppointmentForm
-from django.shortcuts import render
+from .models import Patient, Doctor, Appointment, Billing, Department
+from .forms import PatientForm, DoctorForm, AppointmentForm, BillingForm, DepartmentForm
+
 
 # Create your views here.
 
@@ -68,7 +68,7 @@ def patient_delete(request, pk):
     patient.delete() #Deletes patient from database
     return redirect('patient_list') #Redirect to list view
 
-
+#Doctor View
 def add_doctor(request):
     if request.method == 'POST':
         form = DoctorForm(request.POST)
@@ -143,3 +143,87 @@ def appointment_delete(request, pk):
         appointment.delete()
         return redirect('appointment_list')
     return render(request, 'hospital_app/appointment_confirm_delete.html', {'appointment': appointment})
+
+#Billing Views
+@login_required
+def billing_list(request):
+    billings = Billing.objects.all()
+    return render(request, 'hospital_app/billing_list.html', {'billings': billings})
+
+@login_required
+def billing_create(request):
+    if request.method == "POST":
+        form = BillingForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('billing_list')
+    else:
+        form = BillingForm()
+    return render(request, 'hospital_app/billing_form.html', {'form': form})
+
+@login_required
+def billing_detail(request, pk):
+    billing = get_object_or_404(Billing, BillID=pk)
+    return render(request, 'hospital_app/billing_detail.html', {'billing': billing})
+
+@login_required
+def billing_update(request, pk):
+    billing = get_object_or_404(Billing, BillID=pk)
+    if request.method == "POST":
+        form = BillingForm(request.POST, instance=billing)
+        if form.is_valid():
+            form.save()
+            return redirect('billing_list')
+    else:
+        form = BillingForm(instance=billing)
+    return render(request, 'hospital_app/billing_form.html', {'form': form})
+
+@login_required
+def billing_delete(request, pk):
+    billing = get_object_or_404(Billing, BillID=pk)
+    if request.method == 'POST':
+        billing.delete()
+        return redirect('billing_list')
+    return render(request, 'hospital_app/billing_confirm_delete.html', {'billing': billing})
+
+#Department Views
+@login_required
+def department_list(request):
+    departments = Department.objects.all()
+    return render(request, 'hospital_app/department_list.html', {'departments': departments})
+
+@login_required
+def department_create(request):
+    if request.method == "POST":
+        form = DepartmentForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('department_list')
+    else:
+        form = DepartmentForm()
+    return render(request, 'hospital_app/department_form.html', {'form': form})
+
+@login_required
+def department_detail(request, pk):
+    department = get_object_or_404(Department, DepartmentID=pk)
+    return render(request, 'hospital_app/department_detail.html', {'department': department})
+
+@login_required
+def department_update(request, pk):
+    department = get_object_or_404(Department, DepartmentID=pk)
+    if request.method == "POST":
+        form = DepartmentForm(request.POST, instance=department)
+        if form.is_valid():
+            form.save()
+            return redirect('department_list')
+    else:
+        form = DepartmentForm(instance=department)
+    return render(request, 'hospital_app/department_form.html', {'form': form})
+
+@login_required
+def department_delete(request, pk):
+    department = get_object_or_404(Department, DepartmentID=pk)
+    if request.method == 'POST':
+        department.delete()
+        return redirect('department_list')
+    return render(request, 'hospital_app/department_confirm_delete.html', {'department': department})

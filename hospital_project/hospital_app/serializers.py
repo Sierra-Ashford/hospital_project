@@ -1,10 +1,10 @@
 from rest_framework import serializers
 from .models import Doctor, Patient, Appointment, Billing, Department
 
-class DoctorSerializer(serializers.ModelSerializer):
-    class Meta:
+class DoctorSerializer(serializers.ModelSerializer): #ModelSerializer: Auto-generates fields from the Doctor model
+    class Meta: #Specifies the model and includes all fields
         model = Doctor
-        fields = '__all__'  # Expose all fields
+        fields = '__all__'  
 
 class PatientSerializer(serializers.ModelSerializer):
     class Meta:
@@ -25,3 +25,6 @@ class DepartmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Department
         fields = '__all__'
+
+#Each serializer converts the model into JSON for API responses
+

@@ -7,7 +7,7 @@
     <li><a href="{% url 'patient_list' %}">Manage Patients</a></li>
     <li><a href="{% url 'doctor_list' %}">Manage Doctors</a></li>
     <li><a href="{% url 'appointment_list' %}">Manage Appointments</a></li>
-    <li><a href="#">Manage Billing</a></li>
-    <li><a href="#">Manage Departments</a></li>
+    <li><a href="{% url 'billing_list' %}">Manage Billing</a></li>
+    <li><a href="{% url 'department_list' %}">Manage Departments</a></li>
   </ul>
 {% endblock %}

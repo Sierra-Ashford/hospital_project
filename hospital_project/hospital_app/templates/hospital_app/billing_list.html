@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Billing List</h1>
+  <a href="{% url 'billing_create' %}">Add Billing</a>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Bill ID</th>
+        <th>Patient</th>
+        <th>Total Amount</th>
+        <th>Payment Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for billing in billings %}
+        <tr>
+          <td>{{ billing.BillID }}</td>
+          <td>{{ billing.PatientID }}</td>
+          <td>{{ billing.TotalAmount }}</td>
+          <td>{{ billing.PaymentStatus }}</td>
+          <td>
+            <a href="{% url 'billing_detail' billing.pk %}">View</a> |
+            <a href="{% url 'billing_update' billing.pk %}">Edit</a> |
+            <a href="{% url 'billing_delete' billing.pk %}">Delete</a>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

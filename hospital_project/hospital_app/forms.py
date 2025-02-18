@@ -1,5 +1,5 @@
 from django import forms
-from .models import Patient, Doctor, Appointment
+from .models import Patient, Doctor, Appointment, Billing, Department
 
 class PatientForm(forms.ModelForm): #Automatically creates a form based on the model
     class Meta: #Defines model and fields used in the form
@@ -19,3 +19,13 @@ class AppointmentForm(forms.ModelForm):
             'AppointmentDate': forms.DateInput(attrs={'type': 'date'})
         }
 
+class BillingForm(forms.ModelForm):
+    class Meta:
+        model = Billing
+        fields = ['PatientID', 'TotalAmount', 'PaymentStatus']
+
+
+class DepartmentForm(forms.ModelForm):
+    class Meta:
+        model = Department
+        fields = ['DepartmentName', 'Description']
