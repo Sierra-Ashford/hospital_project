@@ -1,17 +1,22 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 
 {% block content %}
 <h2>Doctors</h2>
-<a href="{% url 'add_doctor' %}">Add Doctor</a>
-<ul>
-  {% for doctor in doctors %}
-    <li>
-      {{ doctor.DoctorName }} - {{ doctor.Specialty }}
-      {% if doctor.DoctorID %}
+
+{% if not user.groups.all|join:", "|lower == "patientmanager" %}
+  <a href="{% url 'add_doctor' %}">Add Doctor</a>
+  <ul>
+    {% for doctor in doctors %}
+      <li>
+        {{ doctor.DoctorName }} - {{ doctor.Specialty }}
         <a href="{% url 'update_doctor' doctor.DoctorID %}">Edit</a> |
         <a href="{% url 'delete_doctor' doctor.DoctorID %}">Delete</a>
-      {% endif %}
-    </li>
-  {% endfor %}
-</ul>
+      </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>You do not have permission to view this page.</p>
+{% endif %}
+
 {% endblock %}
+

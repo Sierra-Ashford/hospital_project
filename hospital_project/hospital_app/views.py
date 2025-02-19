@@ -1,11 +1,15 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.http import HttpResponseForbidden
 from .models import Patient, Doctor, Appointment, Billing, Department
 from .forms import PatientForm, DoctorForm, AppointmentForm, BillingForm, DepartmentForm
 
 
 # Create your views here.
+
+# Function to check if user is NOT in PatientManager group
+def is_not_patient_manager(user):
+    return not user.groups.filter(name="PatientManager").exists()
 
 #Dashboard View
 def dashboard(request):
@@ -68,7 +72,9 @@ def patient_delete(request, pk):
     patient.delete() #Deletes patient from database
     return redirect('patient_list') #Redirect to list view
 
-#Doctor View
+#Doctor Views (Restricted for Reception)
+@login_required
+@user_passes_test(is_not_patient_manager)
 def add_doctor(request):
     if request.method == 'POST':
         form = DoctorForm(request.POST)
@@ -79,10 +85,14 @@ def add_doctor(request):
         form = DoctorForm()
     return render(request, 'hospital_app/doctor_form.html', {'form': form})
 
+@login_required
+@user_passes_test(is_not_patient_manager, login_url='/')
 def doctor_list(request):
     doctors = Doctor.objects.all()
     return render(request, 'hospital_app/doctor_list.html', {'doctors': doctors})
 
+@login_required
+@user_passes_test(is_not_patient_manager)
 def update_doctor(request, doctor_id):
     doctor = get_object_or_404(Doctor, DoctorID=doctor_id)
     if request.method == 'POST':
@@ -94,6 +104,8 @@ def update_doctor(request, doctor_id):
         form = DoctorForm(instance=doctor)
     return render(request, 'hospital_app/doctor_form.html', {'form': form})
 
+@login_required
+@user_passes_test(is_not_patient_manager)
 def delete_doctor(request, doctor_id):
     doctor = get_object_or_404(Doctor, DoctorID=doctor_id)
     if request.method == 'POST':
@@ -186,13 +198,15 @@ def billing_delete(request, pk):
         return redirect('billing_list')
     return render(request, 'hospital_app/billing_confirm_delete.html', {'billing': billing})
 
-#Department Views
+#Department Views (Restricted for Reception)
 @login_required
+@user_passes_test(is_not_patient_manager, login_url='/')
 def department_list(request):
     departments = Department.objects.all()
     return render(request, 'hospital_app/department_list.html', {'departments': departments})
 
 @login_required
+@user_passes_test(is_not_patient_manager)
 def department_create(request):
     if request.method == "POST":
         form = DepartmentForm(request.POST)
@@ -204,11 +218,13 @@ def department_create(request):
     return render(request, 'hospital_app/department_form.html', {'form': form})
 
 @login_required
+@user_passes_test(is_not_patient_manager)
 def department_detail(request, pk):
     department = get_object_or_404(Department, DepartmentID=pk)
     return render(request, 'hospital_app/department_detail.html', {'department': department})
 
 @login_required
+@user_passes_test(is_not_patient_manager)
 def department_update(request, pk):
     department = get_object_or_404(Department, DepartmentID=pk)
     if request.method == "POST":
@@ -221,6 +237,7 @@ def department_update(request, pk):
     return render(request, 'hospital_app/department_form.html', {'form': form})
 
 @login_required
+@user_passes_test(is_not_patient_manager)
 def department_delete(request, pk):
     department = get_object_or_404(Department, DepartmentID=pk)
     if request.method == 'POST':

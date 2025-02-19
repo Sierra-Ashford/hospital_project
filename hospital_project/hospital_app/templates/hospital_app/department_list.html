@@ -2,15 +2,21 @@
 
 {% block content %}
   <h1>Departments</h1>
-  <ul>
-    {% for department in departments %}
-      <li>
-        <a href="{% url 'department_detail' department.pk %}">{{ department.DepartmentName }}</a>
-      </li>
-    {% empty %}
-      <li>No departments available.</li>
-    {% endfor %}
-  </ul>
 
-  <a href="{% url 'department_create' %}">Add a New Department</a>
+  {% if not user.groups.all|join:", "|lower == "patientmanager" %}
+    <ul>
+      {% for department in departments %}
+        <li>
+          <a href="{% url 'department_detail' department.pk %}">{{ department.DepartmentName }}</a>
+        </li>
+      {% empty %}
+        <li>No departments available.</li>
+      {% endfor %}
+    </ul>
+    <a href="{% url 'department_create' %}">Add a New Department</a>
+  {% else %}
+    <p>You do not have permission to view this page.</p>
+  {% endif %}
+
 {% endblock %}
+

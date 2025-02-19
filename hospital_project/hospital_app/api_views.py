@@ -3,7 +3,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.permissions import IsAuthenticated
 from .models import Doctor, Patient, Appointment, Billing, Department
 from .serializers import DoctorSerializer, PatientSerializer, AppointmentSerializer, BillingSerializer, DepartmentSerializer
-from .permissions import AllowAllPermissions, IsOwnerOrReadOnly
+from .permissions import IsOwnerOrReadOnly
 
 class DoctorViewSet(viewsets.ModelViewSet): #viewsets: DRF feature that simplifies CRUD operations and handles API requests
     queryset = Doctor.objects.all()

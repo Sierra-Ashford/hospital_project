@@ -1,17 +1,5 @@
 from rest_framework import permissions
 
-class AllowAllPermissions(permissions.BasePermission):
-    """
-    Custom permission to grant all authenticated users full access.
-    """
-
-    def has_permission(self, request, view):
-        return request.user and request.user.is_authenticated
-
-    def has_object_permission(self, request, view, obj):
-        return True
-
-
 class IsOwnerOrReadOnly(permissions.BasePermission):
     """
     Custom permission to allow object owners to edit it, but read-only for others.
