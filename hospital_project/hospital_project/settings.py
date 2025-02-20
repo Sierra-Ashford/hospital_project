@@ -13,8 +13,6 @@ import os
 from pathlib import Path
 import environ
 
-
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -90,16 +88,30 @@ WSGI_APPLICATION = 'hospital_project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+SECRET_KEY = os.environ.get('SECRET_KEY', 'fallback_secret')
+DEBUG = os.environ.get('DEBUG', 'False') == 'True'
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': env('DB_NAME', default='hospital_db'),        # e.g., my_database
-        'USER': env('DB_USER', default='postgres'),        # e.g., my_username
-        'PASSWORD': env('DB_PASSWORD', default='password'),# e.g., my_secure_password
-        'HOST': env('DB_HOST', default='localhost'),
-        'PORT': env('DB_PORT', default='5432'),
+        'NAME': os.environ.get('POSTGRES_DB'),
+        'USER': os.environ.get('POSTGRES_USER'),
+        'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
+        'HOST': 'db',  # service name from docker-compose
+        'PORT': 5432,
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': env('DB_NAME', default='hospital_db'),        # e.g., my_database
+#         'USER': env('DB_USER', default='postgres'),        # e.g., my_username
+#         'PASSWORD': env('DB_PASSWORD', default='password'),# e.g., my_secure_password
+#         'HOST': env('DB_HOST', default='localhost'),
+#         'PORT': env('DB_PORT', default='5432'),
+#     }
+# }
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
