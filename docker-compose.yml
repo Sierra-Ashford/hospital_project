@@ -2,13 +2,14 @@ version: '3.8'
 
 services:
   web:
-    build: .
+    # build: .
+    image: 241533128805.dkr.ecr.us-east-1.amazonaws.com/my-django-app:latest
     container_name: django_web
-    command: python manage.py runserver 0.0.0.0:8000
+    # command: python /app/hospital_project/manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/app
     ports:
-      - "8000:8000"
+      - "80:8000"
     env_file:
       - .env
     depends_on:
@@ -24,8 +25,8 @@ services:
       - POSTGRES_DB=${POSTGRES_DB}
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-    ports:
-      - "5432:5432"
+    # ports:
+    #   - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
 

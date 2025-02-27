@@ -1,18 +1,48 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h1>Welcome, {{ user.username }}!</h1>
-  <h2>Dashboard</h2>
-  <ul>
-    <li><a href="{% url 'patient_list' %}">Manage Patients</a></li>
-    
-    {% if not user.groups.all|join:", "|lower == "patientmanager" %}
-      <li><a href="{% url 'doctor_list' %}">Manage Doctors</a></li>
-      <li><a href="{% url 'department_list' %}">Manage Departments</a></li>
-    {% endif %}
-    
-    <li><a href="{% url 'appointment_list' %}">Manage Appointments</a></li>
-    <li><a href="{% url 'billing_list' %}">Manage Billing</a></li>
-  </ul>
-{% endblock %}
+  <div class="container mt-4">
+    <div class="card p-4 text-center">
+      <h1 class="dashboard-heading">Welcome to the Hospital Management System!</h1>
+      <h2 class="dashboard-heading">{{ user.username }} Dashboard</h2>
 
+      <ul class="list-unstyled">
+        <li><a href="{% url 'patient_list' %}" class="dashboard-link">🏥 Manage Patients</a></li>
+
+        {% if not user.groups.all|join:", "|lower == "patientmanager" %}
+          <li><a href="{% url 'doctor_list' %}" class="dashboard-link">👨‍⚕️ Manage Doctors</a></li>
+          <li><a href="{% url 'department_list' %}" class="dashboard-link">🏢 Manage Departments</a></li>
+        {% endif %}
+
+        <li><a href="{% url 'appointment_list' %}" class="dashboard-link">📅 Manage Appointments</a></li>
+        <li><a href="{% url 'billing_list' %}" class="dashboard-link">💳 Manage Billing</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <style>
+    .dashboard-heading {
+        font-weight: bold;
+        color: black; /* Changed text color to black */
+        margin-bottom: 15px;
+    }
+
+    .dashboard-link {
+        display: block;
+        padding: 12px;
+        margin-bottom: 10px;
+        border-radius: 8px;
+        background-color: #f8f9fa;
+        text-decoration: none;
+        font-weight: bold;
+        color: #007bff;
+        text-align: left;
+        transition: background-color 0.3s ease;
+    }
+
+    .dashboard-link:hover {
+        background-color: #007bff;
+        color: white;
+    }
+  </style>
+{% endblock %}
