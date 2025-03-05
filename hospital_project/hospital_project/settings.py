@@ -28,10 +28,10 @@ environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
 SECRET_KEY = 'django-insecure-wabk0=_^&1ptr+h7blskb))=9#py@!-)e^&bkxxu#v)ll@d%xs'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
-
+# ALLOWED_HOSTS = ['ec2-44-202-229-160.compute-1.amazonaws.com', 'localhost']
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -102,16 +102,6 @@ DATABASES = {
     }
 }
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': env('DB_NAME', default='hospital_db'),        # e.g., my_database
-#         'USER': env('DB_USER', default='postgres'),        # e.g., my_username
-#         'PASSWORD': env('DB_PASSWORD', default='password'),# e.g., my_secure_password
-#         'HOST': env('DB_HOST', default='localhost'),
-#         'PORT': env('DB_PORT', default='5432'),
-#     }
-# }
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
